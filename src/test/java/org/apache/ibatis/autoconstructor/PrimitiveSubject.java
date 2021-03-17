@@ -26,6 +26,16 @@ public class PrimitiveSubject {
   private final boolean active;
   private final Date dt;
 
+  /**
+   *
+   * @param id
+   * @param name
+   * @param age
+   * @param height 参数类型为int, 而不是Integer，如果字段为NULL，会报错
+   * @param weight
+   * @param active
+   * @param dt
+   */
   public PrimitiveSubject(final int id, final String name, final int age, final int height, final int weight, final boolean active, final Date dt) {
     this.id = id;
     this.name = name;
