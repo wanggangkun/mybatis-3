@@ -26,6 +26,11 @@ import org.apache.ibatis.reflection.property.PropertyTokenizer;
  */
 public interface ObjectWrapper {
 
+  /**
+   * 获得值
+   * @param prop 对象，相当于键
+   * @return 值
+   */
   Object get(PropertyTokenizer prop);
 
   void set(PropertyTokenizer prop, Object value);

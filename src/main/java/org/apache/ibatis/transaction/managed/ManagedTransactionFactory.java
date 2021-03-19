@@ -37,6 +37,7 @@ public class ManagedTransactionFactory implements TransactionFactory {
 
   @Override
   public void setProperties(Properties props) {
+    // 获得是否关闭连接属性
     if (props != null) {
       String closeConnectionProperty = props.getProperty("closeConnection");
       if (closeConnectionProperty != null) {
