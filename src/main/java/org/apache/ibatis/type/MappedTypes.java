@@ -41,7 +41,7 @@ public @interface MappedTypes {
   /**
    * Returns java types to map {@link TypeHandler}.
    *
-   * @return java types
+   * @return java types 匹配的 Java Type 类型的数组
    */
   Class<?>[] value();
 }

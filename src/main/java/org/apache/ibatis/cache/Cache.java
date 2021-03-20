@@ -47,6 +47,7 @@ public interface Cache {
   String getId();
 
   /**
+   * 添加指定键的值
    * @param key
    *          Can be any object but usually it is a {@link CacheKey}
    * @param value
@@ -55,6 +56,7 @@ public interface Cache {
   void putObject(Object key, Object value);
 
   /**
+   * 获得指定键的值
    * @param key
    *          The key
    * @return The object stored in the cache.
@@ -71,6 +73,7 @@ public interface Cache {
    * This way other threads will wait for the value to be
    * available instead of hitting the database.
    *
+   * 移除指定键的值
    *
    * @param key
    *          The key
@@ -80,11 +83,13 @@ public interface Cache {
 
   /**
    * Clears this cache instance.
+   * 清空缓存
    */
   void clear();
 
   /**
    * Optional. This method is not called by the core.
+   * 获得容器中缓存的数量
    *
    * @return The number of elements stored in the cache (not its capacity).
    */

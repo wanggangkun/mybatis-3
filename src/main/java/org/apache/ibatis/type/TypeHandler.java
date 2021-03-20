@@ -25,16 +25,27 @@ import java.sql.SQLException;
  */
 public interface TypeHandler<T> {
 
+  /**
+   * 设置 PreparedStatement 的指定参数
+   * Java Type => JDBC Type
+   * @param ps PreparedStatement 对象
+   * @param i 参数占位符的位置
+   * @param parameter 参数
+   * @param jdbcType JDBC 类型
+   * @throws SQLException 当发生 SQL 异常时
+   */
   void setParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException;
 
   /**
    * Gets the result.
+   * 获得 ResultSet 的指定字段的值
+   * JDBC Type => Java Type
    *
    * @param rs
-   *          the rs
-   * @param columnName
+   *          the rs ResultSet 对象
+   * @param columnName 字段名
    *          Colunm name, when configuration <code>useColumnLabel</code> is <code>false</code>
-   * @return the result
+   * @return the result 值
    * @throws SQLException
    *           the SQL exception
    */

@@ -28,11 +28,18 @@ import org.apache.ibatis.cache.Cache;
 public class LruCache implements Cache {
 
   private final Cache delegate;
+  /**
+   * 基于 LinkedHashMap 实现淘汰机制
+   */
   private Map<Object, Object> keyMap;
+  /**
+   * 最老的键，即要被淘汰的
+   */
   private Object eldestKey;
 
   public LruCache(Cache delegate) {
     this.delegate = delegate;
+    // 初始化 keyMap 对象
     setSize(1024);
   }
 
@@ -47,9 +54,11 @@ public class LruCache implements Cache {
   }
 
   public void setSize(final int size) {
+    // LinkedHashMap的一个构造函数，当参数accessOrder为true时，即会按照访问顺序排序，最近访问的放在最前，最早访问的放在后面
     keyMap = new LinkedHashMap<Object, Object>(size, .75F, true) {
       private static final long serialVersionUID = 4267176411845948333L;
 
+      // LinkedHashMap自带的判断是否删除最老的元素方法，默认返回false，即不删除老数据
       @Override
       protected boolean removeEldestEntry(Map.Entry<Object, Object> eldest) {
         boolean tooBig = size() > size;
@@ -69,6 +78,7 @@ public class LruCache implements Cache {
 
   @Override
   public Object getObject(Object key) {
+    // 刷新 keyMap 的访问顺序
     keyMap.get(key); // touch
     return delegate.getObject(key);
   }
@@ -87,6 +97,7 @@ public class LruCache implements Cache {
   private void cycleKeyList(Object key) {
     keyMap.put(key, key);
     if (eldestKey != null) {
+      // 如果超过上限，则从 delegate 中，移除最少使用的那个
       delegate.removeObject(eldestKey);
       eldestKey = null;
     }

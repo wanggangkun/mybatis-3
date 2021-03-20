@@ -25,7 +25,13 @@ import org.apache.ibatis.cache.Cache;
 public class ScheduledCache implements Cache {
 
   private final Cache delegate;
+  /**
+   * 清空间隔，单位：毫秒
+   */
   protected long clearInterval;
+  /**
+   * 最后清空时间，单位：毫秒
+   */
   protected long lastClear;
 
   public ScheduledCache(Cache delegate) {
@@ -45,6 +51,7 @@ public class ScheduledCache implements Cache {
 
   @Override
   public int getSize() {
+    // 判断是否要全部清空
     clearWhenStale();
     return delegate.getSize();
   }
@@ -83,6 +90,7 @@ public class ScheduledCache implements Cache {
   }
 
   private boolean clearWhenStale() {
+    // 判断是否要全部清空
     if (System.currentTimeMillis() - lastClear > clearInterval) {
       clear();
       return true;

@@ -37,6 +37,9 @@ import org.apache.ibatis.io.Resources;
  */
 public class TypeAliasRegistry {
 
+  /**
+   * 类型与别名的映射。
+   */
   private final Map<String, Class<?>> typeAliases = new HashMap<>();
 
   public TypeAliasRegistry() {
@@ -125,10 +128,17 @@ public class TypeAliasRegistry {
     registerAliases(packageName, Object.class);
   }
 
+  /**
+   * 注册指定包下的别名与类的映射。另外，要求类必须是 superType 类型（包括子类）。
+   * @param packageName 指定包
+   * @param superType 指定父类
+   */
   public void registerAliases(String packageName, Class<?> superType) {
+    // 获得指定包下的类门
     ResolverUtil<Class<?>> resolverUtil = new ResolverUtil<>();
     resolverUtil.find(new ResolverUtil.IsA(superType), packageName);
     Set<Class<? extends Class<?>>> typeSet = resolverUtil.getClasses();
+    // 遍历，逐个注册类型与别名的注册表
     for (Class<?> type : typeSet) {
       // Ignore inner classes and interfaces (including package-info.java)
       // Skip also inner classes. See issue #6
@@ -139,11 +149,14 @@ public class TypeAliasRegistry {
   }
 
   public void registerAlias(Class<?> type) {
+    // 默认为，简单类名
     String alias = type.getSimpleName();
     Alias aliasAnnotation = type.getAnnotation(Alias.class);
+    // 如果有注解，使用注解上的名字
     if (aliasAnnotation != null) {
       alias = aliasAnnotation.value();
     }
+    // 注册类型与别名的注册表
     registerAlias(alias, type);
   }
 
@@ -152,6 +165,7 @@ public class TypeAliasRegistry {
       throw new TypeException("The parameter alias cannot be null");
     }
     // issue #748
+    // 转换成小写
     String key = alias.toLowerCase(Locale.ENGLISH);
     if (typeAliases.containsKey(key) && typeAliases.get(key) != null && !typeAliases.get(key).equals(value)) {
       throw new TypeException("The alias '" + alias + "' is already mapped to the value '" + typeAliases.get(key).getName() + "'.");
@@ -161,6 +175,7 @@ public class TypeAliasRegistry {
 
   public void registerAlias(String alias, String value) {
     try {
+      // 通过类名的字符串，获得对应的类。
       registerAlias(alias, Resources.classForName(value));
     } catch (ClassNotFoundException e) {
       throw new TypeException("Error registering type alias " + alias + " for " + value + ". Cause: " + e, e);
