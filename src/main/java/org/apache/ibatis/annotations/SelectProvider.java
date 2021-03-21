@@ -66,7 +66,7 @@ public @interface SelectProvider {
    * This attribute is alias of {@link #value()}.
    * </p>
    *
-   * @return a type that implements an SQL provider method
+   * @return a type that implements an SQL provider method 提供的类
    * @see #value()
    */
   Class<?> type() default void.class;
@@ -89,7 +89,7 @@ public @interface SelectProvider {
    *   </li>
    * </ul>
    *
-   * @return a method name of method for providing an SQL
+   * @return a method name of method for providing an SQL 提供的方法
    */
   String method() default "";
 

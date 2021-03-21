@@ -40,21 +40,21 @@ public @interface Result {
   /**
    * Returns whether id column or not.
    *
-   * @return {@code true} if id column; {@code false} if otherwise
+   * @return {@code true} if id column; {@code false} if otherwise 是否是 ID 字段
    */
   boolean id() default false;
 
   /**
    * Return the column name(or column label) to map to this argument.
    *
-   * @return the column name(or column label)
+   * @return the column name(or column label) 数据库的字段
    */
   String column() default "";
 
   /**
    * Returns the property name for applying this mapping.
    *
-   * @return the property name
+   * @return the property name Java 类中的属性
    */
   String property() default "";
 
@@ -75,7 +75,7 @@ public @interface Result {
   /**
    * Returns the {@link TypeHandler} type for retrieving a column value from result set.
    *
-   * @return the {@link TypeHandler} type
+   * @return the {@link TypeHandler} type 使用的 TypeHandler 处理器
    */
   Class<? extends TypeHandler> typeHandler() default UnknownTypeHandler.class;
 

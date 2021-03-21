@@ -53,6 +53,7 @@ public @interface CacheNamespaceRef {
 
   /**
    * Returns the namespace name to reference a cache.
+   * 指向的命名空间
    *
    * @return the namespace name
    * @since 3.4.2

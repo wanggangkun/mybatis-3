@@ -53,42 +53,42 @@ public @interface CacheNamespace {
   /**
    * Returns the cache implementation type to use.
    *
-   * @return the cache implementation type
+   * @return the cache implementation type 负责存储的 Cache 实现类
    */
   Class<? extends Cache> implementation() default PerpetualCache.class;
 
   /**
    * Returns the cache evicting implementation type to use.
    *
-   * @return the cache evicting implementation type
+   * @return the cache evicting implementation type 负责过期的 Cache 实现类
    */
   Class<? extends Cache> eviction() default LruCache.class;
 
   /**
    * Returns the flush interval.
    *
-   * @return the flush interval
+   * @return the flush interval 清空缓存的频率。0 代表不清空
    */
   long flushInterval() default 0;
 
   /**
    * Return the cache size.
    *
-   * @return the cache size
+   * @return the cache size 缓存容器大小
    */
   int size() default 1024;
 
   /**
    * Returns whether use read/write cache.
    *
-   * @return {@code true} if use read/write cache; {@code false} if otherwise
+   * @return {@code true} if use read/write cache; {@code false} if otherwise 是否序列化
    */
   boolean readWrite() default true;
 
   /**
    * Returns whether block the cache at request time or not.
    *
-   * @return {@code true} if block the cache; {@code false} if otherwise
+   * @return {@code true} if block the cache; {@code false} if otherwise 是否阻塞
    */
   boolean blocking() default false;
 
